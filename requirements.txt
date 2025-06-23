@@ -1,4 +1,5 @@
 numpy>=1.26
+pandas
 streamlit
-watchdog>=2.0.0
+# watchdog>=2.0.0
 
