@@ -1,0 +1,11 @@
+[server]
+# address = "0.0.0.0"
+port = 1411
+maxUploadSize = 50
+[theme]
+base="dark"
+primaryColor="#ffd14e"
+backgroundColor="#0a2656"
+secondaryBackgroundColor="#103e8e"
+textColor="#ffffff"
+font="sans serif"
