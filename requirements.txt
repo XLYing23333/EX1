@@ -1,0 +1,4 @@
+numpy>=1.26
+streamlit
+watchdog>=2.0.0
+
