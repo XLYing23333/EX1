@@ -15,6 +15,7 @@ pg = st.navigation([
 
 pg.run()
 
+
 sidebar()
 
     
