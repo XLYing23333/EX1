@@ -1,4 +1,11 @@
 import streamlit as st
+import time
+
+def session_state_init():
+    st.session_state['model_size'] = 'nano'
+    st.session_state['model_name'] = 'yolov8n.pt'
+    st.session_state['use_gpu'] = False
+    st.session_state['device'] = 'cpu'
 
 def sidebar_info():
     st.sidebar.header("Image / Video")
@@ -17,26 +24,32 @@ def sidebar_info():
     
     
 def sidebar_config():
-    st.sidebar.title("YOLOv8 Config")
-    model_size = st.sidebar.radio(
-        label="Model size",
-        options=["nano", "small", "medium"]
-    )
-    model_dict = {
-        'nano': 'yolov8n.pt',
-        'small': 'yolov8s.pt',
-        'medium': 'yolov8m.pt'
-    }
+    with st.sidebar.form("config_form"):
+        st.title("YOLOv8 Config")
+        model_size = st.radio(
+            label="Model size",
+            options=["nano", "small", "medium"]
+        )
+        model_dict = {
+            'nano': 'yolov8n.pt',
+            'small': 'yolov8s.pt',
+            'medium': 'yolov8m.pt'
+        }
+        
+        use_gpu = st.checkbox("USE GPU Acceleration")
+        device = "cuda" if use_gpu else "cpu"
+        
+        if st.form_submit_button("Submit"): 
+            st.session_state['model_size'] = model_size
+            st.session_state['model_name'] = model_dict[model_size]
+            st.session_state['use_gpu'] = use_gpu
+            st.session_state['device'] = device
+            st.success("Submit Success.")
+            time.sleep(0.05)
+            st.rerun()
+            # st.json(st.session_state)
+    st.sidebar.write(f"Selected: {st.session_state['model_size']}, Device: {st.session_state['device']}")
     
-    use_gpu = st.sidebar.checkbox("USE GPU Acceleration")
-    device = "cuda" if use_gpu else "cpu"
-    st.sidebar.write(f"Selected: {model_size}, GPU: {use_gpu}")
-    st.session_state['model_size'] = model_size
-    st.session_state['model_name'] = model_dict[model_size]
-    st.session_state['use_gpu'] = use_gpu
-    st.session_state['device'] = device
-    # st.sidebar.json(st.session_state)
-
 def img_upload():
     img = st.sidebar.file_uploader(label="Upload an image", type=["png", "jpg", "jpeg", "BMP", "WEBP"])
     return img
