@@ -1,2 +1,2 @@
-source myenv/bin/activate
+source venv/bin/activate
 streamlit run app.py
