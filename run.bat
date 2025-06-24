@@ -1,4 +1,3 @@
 @echo off
-@REM 
-call myenv\Scripts\activate.bat
+call .\myenv\Scripts\activate.bat
 streamlit run app.py
