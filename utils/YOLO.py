@@ -3,6 +3,7 @@ import cv2
 import streamlit as st
 from utils.path import Path
 from ultralytics import YOLO
+import torch
 
 
 def check_model(model_name):
@@ -17,7 +18,13 @@ def check_model(model_name):
         st.error(f"错误详情: {str(ex)}")
         return False
     
-def predict_img(model, uploaded_image, confidence):
+def predict_img(model, uploaded_image, confidence, device: str = 'cpu'):
+    if device == 'cuda':
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        if device == 'cpu':
+            st.sidebar.warning("CUDA is not available, using CPU instead.")
+    
+    
     res = model.predict(uploaded_image, conf=confidence)
     boxes = res[0].boxes
     res_plotted = res[0].plot()[:, :, ::-1]
