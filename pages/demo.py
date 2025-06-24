@@ -1,7 +1,7 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-from utils.sidebar import sidebar
+
 
 
 def static_stable():
