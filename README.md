@@ -1,15 +1,15 @@
 # EX-1 Streamlit & YOLO
 
-> Author: [XLY23333](https://xly23333.xyz)
+> Code by: [XLY23333](https://xly23333.xyz)
 >
 > Real Info:
-> > 班级：智科22-2
+> > Class:
 > >
-> > 姓名：张宇轩
+> > Name:
 > >
-> > 学号：202211160064
+> > ID:
 >
-> Date: 2025-06-23
+> Date:
 >
 > Python Version: 3.11
 >

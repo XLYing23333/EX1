@@ -17,15 +17,19 @@ def check_model(model_name):
         st.error(f" 无法加载模型，请检查路径: {model_path}")
         st.error(f"错误详情: {str(ex)}")
         return False
-    
-def predict_img(model, uploaded_image, confidence, device: str = 'cpu'):
+
+def check_device(device):
     if device == 'cuda':
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         if device == 'cpu':
-            st.sidebar.warning("CUDA is not available, using CPU instead.")
-    
-    
-    res = model.predict(uploaded_image, conf=confidence)
+            st.warning("CUDA is not available, using CPU instead.")
+        elif device == 'cuda':
+            st.success("CUDA is available, using GPU instead.")   
+    return device
+  
+def predict_img(model, uploaded_image, confidence, device: str = 'cpu'):
+    # device = check_device(device)
+    res = model.predict(uploaded_image, conf=confidence, device=device)
     boxes = res[0].boxes
     res_plotted = res[0].plot()[:, :, ::-1]
     return {
