@@ -11,7 +11,7 @@ def sidebar_info():
     st.sidebar.header("Image / Video")
     source = st.sidebar.selectbox(
         label="Choose a source",
-        options=["Image", "Video"]
+        options=["Image", "Video", "Camera"]
     )
     confidence= float(st.sidebar.slider(
         label="Confidence",
@@ -45,7 +45,7 @@ def sidebar_config():
             st.session_state['use_gpu'] = use_gpu
             st.session_state['device'] = device
             st.success("Submit Success.")
-            time.sleep(0.05)
+            time.sleep(0.5)
             st.rerun()
             # st.json(st.session_state)
     st.sidebar.write(f"Selected: {st.session_state['model_size']}, Device: {st.session_state['device']}")

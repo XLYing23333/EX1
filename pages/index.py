@@ -71,8 +71,6 @@ def main():
             if video_bytes:
                 st.write('### Raw Video')
                 st.video(video_bytes)
-    
-            
 
             if st.sidebar.button('Detect Video Objects'):
                 if st.sidebar.button("STOP"):
@@ -84,8 +82,7 @@ def main():
                 device = check_device(st.session_state['device'])
                 model = check_model(st.session_state['model_name'])
                 
-                # cap = cv2.VideoCapture(temp_video_path)
-                cap = cv2.VideoCapture(0)
+                cap = cv2.VideoCapture(temp_video_path)
                 
                 while cap.isOpened():
                     ret, frame = cap.read()
@@ -100,6 +97,34 @@ def main():
                 os.remove(temp_video_path)
         else:
             st.write("Please upload a video file.")
+    
+    elif st.session_state['source'] == "Camera":
+        
+        stframe = st.empty()
+        info_output = st.empty()
+        
+        if st.sidebar.button('Detect Camera Objects'):
+                if st.sidebar.button("STOP"):
+                    try: cap.release()
+                    except: pass
+                    st.rerun()
+                device = check_device(st.session_state['device'])
+                model = check_model(st.session_state['model_name'])
+                cap = cv2.VideoCapture(0)
+                
+                while cap.isOpened():
+                    ret, frame = cap.read()
+                    if not ret:
+                        break
+                    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    res = predict_img(model, frame, st.session_state['confidence'], device)
+                    stframe.image(res['res_plotted'], channels="BGR", caption='Detected Objects')
+                    with info_output.expander("Detection Results"):
+                        for box in res['boxes']:
+                            st.write(box.xywh)
+                cap.release()
+        
+    
     
     sidebar_config()
         

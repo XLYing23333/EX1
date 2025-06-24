@@ -2,7 +2,7 @@
 # address = "0.0.0.0"
 port = 1411
 maxUploadSize = 50
-runOnSave = true
+runOnSave = false
 folderWatchBlacklist = ['__pycache__', '*.pyc']
 [theme]
 base="dark"
