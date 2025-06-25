@@ -6,7 +6,7 @@ class Path:
         self.ROOT = os.path.dirname(self.UTILS)
         self.DATA = os.path.join(self.ROOT, 'data')
         self.PAGES = os.path.join(self.ROOT, 'pages')
-        self.MODELS = os.path.join(self.ROOT,'models')
+        self.MODELS = os.path.join(self.ROOT,'model')
     
     def show_paths(self):
         print(f"UTILS: {self.UTILS}")

@@ -26,28 +26,44 @@ def sidebar_info():
 def sidebar_config():
     with st.sidebar.form("config_form"):
         st.title("YOLOv8 Config")
-        model_size = st.radio(
-            label="Model size",
-            options=["nano", "small", "medium"]
-        )
+        cols1, cols2 = st.columns(2)
+        with cols1:
+            model_size = st.radio(
+                label="Model size",
+                options=["nano", "small", "medium"]
+            )
+        with cols2:
+            model_type = st.radio(
+                label="Model type",
+                options=["Detect", "Segment", "Classify"]
+            )
         model_dict = {
-            'nano': 'yolov8n.pt',
-            'small': 'yolov8s.pt',
-            'medium': 'yolov8m.pt'
+            'nano': 'yolov8n<TYPE>.pt',
+            'small': 'yolov8s<TYPE>.pt',
+            'medium': 'yolov8m<TYPE>.pt'
+        }
+        model_type_dict = {
+            'Detect': '',
+            'Segment': '-seg',
+            'Classify': '-cls'
         }
         
         use_gpu = st.checkbox("USE GPU Acceleration")
         device = "cuda" if use_gpu else "cpu"
         
         if st.form_submit_button("Submit"): 
+            
+            model_type_id = model_type_dict[model_type]
+            model_id = model_dict[model_size].replace("<TYPE>", model_type_id)
+            
             st.session_state['model_size'] = model_size
-            st.session_state['model_name'] = model_dict[model_size]
+            st.session_state['model_name'] = model_id
             st.session_state['use_gpu'] = use_gpu
             st.session_state['device'] = device
             st.success("Submit Success.")
             time.sleep(0.5)
             st.rerun()
-            # st.json(st.session_state)
+        st.json(st.session_state)
     st.sidebar.write(f"Selected: {st.session_state['model_size']}, Device: {st.session_state['device']}")
     
 def img_upload():
