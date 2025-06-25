@@ -1,3 +1,10 @@
 myenv/
 .vscode/
 temp/
+.env
+model/yolov8s.pt
+model/yolov8s-cls.pt
+model/yolov8s-seg.pt
+model/yolov8m.pt
+model/yolov8m-cls.pt
+model/yolov8m-seg.pt

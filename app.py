@@ -1,4 +1,8 @@
 import streamlit as st
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 
 # Set page title and icon
