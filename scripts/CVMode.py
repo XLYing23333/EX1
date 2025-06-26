@@ -82,7 +82,7 @@ def mode_video():
                     break
                 res = predict_img(model, frame, st.session_state['confidence'], device)
                 stframe.image(res['res_plotted'], channels="RGB", caption='Detected Objects')
-                if st.session_state['source'] == "Image":
+                if st.session_state['model_type'] != "Classify":
                     with info_output.expander("Detection Results"):
                         for box in res['boxes']:
                             st.write(box.xywh)
@@ -111,7 +111,7 @@ def mode_camera():
                 # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 res = predict_img(model, frame, st.session_state['confidence'], device)
                 stframe.image(res['res_plotted'], channels="RGB", caption='Detected Objects')
-                if st.session_state['source'] == "Image":
+                if st.session_state['model_type'] != "Classify":
                     with info_output.expander("Detection Results"):
                         for box in res['boxes']:
                             st.write(box.xywh)

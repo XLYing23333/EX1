@@ -5,6 +5,8 @@ temp/
 model/yolov8s.pt
 model/yolov8s-cls.pt
 model/yolov8s-seg.pt
+model/yolov8s-pose.pt
 model/yolov8m.pt
 model/yolov8m-cls.pt
 model/yolov8m-seg.pt
+model/yolov8m-pose.pt
