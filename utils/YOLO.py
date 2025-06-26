@@ -20,17 +20,26 @@ def check_model(model_name):
 
 def check_device(device):
     if device == 'cuda':
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        print(f'CUDA-test-device: {device}')
         if device == 'cpu':
-            st.warning("CUDA is not available, using CPU instead.")
+            st.sidebar.warning("CUDA is not available, using CPU instead.")
+            print("[INFO] CUDA is not available, using CPU instead.")
         elif device == 'cuda':
-            st.success("CUDA is available, using GPU instead.")   
+            st.sidebar.success("CUDA is available, using GPU instead.")   
+            print("[INFO] CUDA is available, using GPU instead.")
+    else:
+        print("[INFO] Using CPU.")
+        st.sidebar.success('Model is running on CPU.')
     return device
   
-def predict_img(model, uploaded_image, confidence, device: str = 'cpu'):
-    # device = check_device(device)
-    res = model.predict(uploaded_image, conf=confidence, device=device)
+def predict_img(model, uploaded_image, confidence, device: str = 'cuda'):
+    if st.session_state['detect_mode'] == 'Normal':
+        res = model.predict(uploaded_image, conf=confidence, device=device)
+    elif st.session_state['detect_mode'] == 'Track':
+        res = model.track(uploaded_image, conf=confidence, device=device, persist=True)
     boxes = res[0].boxes
+
     res_plotted = res[0].plot()[:, :, ::-1]
     return {
         'boxes': boxes,
